@@ -1,7 +1,6 @@
 import 'package:api_call/network/api_endpoints.dart';
 import 'package:api_call/pages/theitemlistscreen/response_theitemlist.dart';
 import 'package:api_call/pages/theitemscreen/screen_theitempage.dart';
-import 'package:api_call/utility/utility.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +54,15 @@ class _TheItemListPageState extends State<TheItemListPage> implements TheItemLis
         onWillPop: _onBackPress,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Menu'),
+            title: Text(
+              'Menu',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.black87
+              ),
+            ),
             centerTitle: true,
+            backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
           ),
           body: Visibility(
@@ -88,10 +94,10 @@ class _TheItemListPageState extends State<TheItemListPage> implements TheItemLis
   }
 
   @override
-  void setResponse(TheItemListResponseBody response) {
+  void setResponse(List<TheItemListResponse> response) {
     if (response != null) {
       setState(() {
-        _listData = List.from(response.list);
+        _listData = List.from(response);
 
         // Sorting by weight
         _listData.sort((a,b) => a.weight.compareTo(b.weight));
@@ -122,8 +128,17 @@ class ListOfRestaurants extends StatelessWidget {
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
-          color:  Colors.lightBlue,
-          child: Center(child: Text(item[position].name.toString())),
+          margin: EdgeInsets.all(4),
+          child: Text(item[position].name.toString()),
+          decoration: BoxDecoration(
+            color:  const Color(0xff64a4d5),
+            border: Border.all(
+                color: Colors.black
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(1.0),
+            ),
+          ),
         ),
         ListView.builder(
           shrinkWrap: true,
@@ -161,14 +176,14 @@ class ListOfMenus extends StatelessWidget {
             _goToItemScreenPage(context, item![position]);
           },
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(8),
             child: Row(
               children: [
                 /// Image
                 Container(
-                  height: 30,
-                  width: 30,
-                  margin: EdgeInsets.only(right: 8),
+                  height: 50,
+                  width: 50,
+                  margin: EdgeInsets.only(left: 12, right: 9),
                   child: CachedNetworkImage(
                     imageUrl: ApiUrls.instance.photoBase.toString() + item![position].photo.toString(),
                     placeholder: (context, url) =>
@@ -179,12 +194,25 @@ class ListOfMenus extends StatelessWidget {
                     ),
                     fit: BoxFit.fill,
                   ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Colors.black
+                    ),
+                  ),
                 ),
 
                 /// Menu Title
-                Container(
-                  child: Text(
-                      item![position].title.toString(),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                    child: Text(
+                        item![position].title.toString(),
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.black
+                      ),
+                    ),
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:api_call/pages/theitemlistscreen/response_theitemlist.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'dart:io' as IO;
@@ -22,13 +23,14 @@ class ApiClient {
   }
 
   /// GET CALL JS Object
-  static Future<dynamic> getJs(
+  static Future<dynamic> getList(
       String url, dynamic parameters, bool isJWTRequired) async {
     try {
       Dio dio = await _dioClient(isJWTRequired);
       Response response = await dio.get(url, queryParameters: Map<String, dynamic>());
       print(response);
-      return _response(response);
+      return response.data;
+      // return _response(response);
     } catch (e) {
       throw e;
     }

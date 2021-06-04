@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 class TheItemListInterface {
   void onStartShowing() {}
   void onStopLoading() {}
-  void setResponse(TheItemListResponseBody response){}
+  // void setResponse(TheItemListResponseBody response){}
+  void setResponse(List<TheItemListResponse> response){}
 }
 
 class TheItemListPresenter {
@@ -23,7 +24,7 @@ class TheItemListPresenter {
       if (value) {
         this._interface?.onStartShowing();
         _apiRepository?.getRestaurantList(context, params,
-            onSuccess: (TheItemListResponseBody response) {
+            onSuccess: (List<TheItemListResponse> response) {
               this._interface?.onStopLoading();
               if (response != null) {
                 this._interface?.setResponse(response);

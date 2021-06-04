@@ -38,7 +38,7 @@ class LoginPresenter {
             onFailure: (String error) {
               this._interface?.onStopLoading();
               print(error);
-              CommonUtil.instance.showToast(context, 'Invalid email or password');
+              CommonUtil.instance.showToast(context, 'Failed');
             });
       } else {
         this._interface?.onStopLoading();
