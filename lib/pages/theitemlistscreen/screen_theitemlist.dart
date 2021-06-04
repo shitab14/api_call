@@ -112,10 +112,10 @@ class _TheItemListPageState extends State<TheItemListPage> implements TheItemLis
 
 /// ListViews
 class ListOfRestaurants extends StatelessWidget {
-  final int position;
+  final int index;
   final List<TheItemListResponse> item;
 
-  const ListOfRestaurants(this.position,
+  const ListOfRestaurants(this.index,
       this.item,
       {
         Key? key,
@@ -129,7 +129,7 @@ class ListOfRestaurants extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.all(16),
           margin: EdgeInsets.all(4),
-          child: Text(item[position].name.toString()),
+          child: Text(item[index].name.toString()),
           decoration: BoxDecoration(
             color:  const Color(0xff64a4d5),
             border: Border.all(
@@ -143,10 +143,10 @@ class ListOfRestaurants extends StatelessWidget {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: item[position].menus!.length,
+          itemCount: item[index].menus!.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, position) {
-            return ListOfMenus (position, item[position].menus);
+            return ListOfMenus (position, item[index].menus);
           },
         ),
       ],
@@ -158,10 +158,10 @@ class ListOfRestaurants extends StatelessWidget {
 }
 
 class ListOfMenus extends StatelessWidget {
-  final int position;
+  final int index;
   final List<Menus>? item;
 
-  const ListOfMenus(this.position,
+  const ListOfMenus(this.index,
       this.item,
       {
         Key? key,
@@ -173,7 +173,7 @@ class ListOfMenus extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            _goToItemScreenPage(context, item![position]);
+            _goToItemScreenPage(context, item![index]);
           },
           child: Container(
             padding: EdgeInsets.all(8),
@@ -185,7 +185,7 @@ class ListOfMenus extends StatelessWidget {
                   width: 50,
                   margin: EdgeInsets.only(left: 12, right: 9),
                   child: CachedNetworkImage(
-                    imageUrl: ApiUrls.instance.photoBase.toString() + item![position].photo.toString(),
+                    imageUrl: ApiUrls.instance.photoBase.toString() + item![index].photo.toString(),
                     placeholder: (context, url) =>
                         Image.asset("assets/images/empty_box.png", fit: BoxFit.cover),
                     errorWidget: (context, url, error) => Image.asset(
@@ -206,7 +206,7 @@ class ListOfMenus extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                     child: Text(
-                        item![position].title.toString(),
+                        item![index].title.toString(),
                     ),
                     decoration: BoxDecoration(
                       border: Border.all(
